@@ -1,0 +1,39 @@
+    <div class="container mt-5">
+        <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2>Éditer Espèce</h2>
+        </div>
+        </div>
+        <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form [formGroup]="speciesForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="commonName">Nom Commun</label>
+                <input id="commonName" class="form-control" formControlName="commonName">
+                <div *ngIf="speciesForm.get('commonName')?.invalid && speciesForm.get('commonName')?.touched" class="text-danger">
+                Le nom commun est requis.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="latinName">Nom Latin</label>
+                <input id="latinName" class="form-control" formControlName="latinName">
+                <div *ngIf="speciesForm.get('latinName')?.invalid && speciesForm.get('latinName')?.touched" class="text-danger">
+                Le nom latin est requis.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" formControlName="description"></textarea>
+                <div *ngIf="speciesForm.get('description')?.invalid && speciesForm.get('description')?.touched" class="text-danger">
+                La description est requise.
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="!speciesForm.valid">Mettre à jour</button>
+                <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+    

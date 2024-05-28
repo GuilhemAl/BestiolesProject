@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonneService } from '../services/personne.service';
+import { AnimalService } from '../services/animal.service';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-personne-list',
-  templateUrl: './personne-list.component.html',
-  styleUrls: ['./personne-list.component.css']
+  selector: 'app-animal-list',
+  templateUrl: './animal-list.component.html',
+  styleUrls: ['./animal-list.component.css']
 })
-export class PersonneListComponent implements OnInit {
-  personnes: any[] = [];
+export class AnimalListComponent implements OnInit {
+  animals: any[] = [];
   searchForm: FormGroup;
 
   constructor(
-    private personneService: PersonneService,
+    private animalService: AnimalService,
     private authService: AuthService,
     private fb: FormBuilder
   ) {
@@ -23,18 +23,18 @@ export class PersonneListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadPersonnes();
+    this.loadAnimals();
 
     // Watch for search input changes
     this.searchForm.get('search')?.valueChanges.subscribe(value => {
-      this.loadPersonnes(value);
+      this.loadAnimals(value);
     });
   }
 
-  loadPersonnes(searchTerm?: string): void {
-    this.personneService.getAll(searchTerm).subscribe(
+  loadAnimals(searchTerm?: string): void {
+    this.animalService.getAll(searchTerm).subscribe(
       data => {
-        this.personnes = data;
+        this.animals = data;
       },
       error => {
         console.error('There was an error!', error);
@@ -42,9 +42,9 @@ export class PersonneListComponent implements OnInit {
     );
   }
 
-  deletePersonne(id: number): void {
-    this.personneService.delete(id).subscribe(() => {
-      this.loadPersonnes(); // Reload the list after deletion
+  deleteAnimal(id: number): void {
+    this.animalService.delete(id).subscribe(() => {
+      this.loadAnimals(); // Reload the list after deletion
     });
   }
 

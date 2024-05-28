@@ -1,0 +1,12 @@
+<div class="container mt-5">
+    <h2>Détails de l'Espèce</h2>
+    <div *ngIf="species">
+      <p><strong>ID:</strong> {{ species.id }}</p>
+      <p><strong>Nom Commun:</strong> {{ species.commonName }}</p>
+      <p><strong>Nom Latin:</strong> {{ species.latinName }}</p>
+      <button *ngIf="isAdmin()" (click)="deleteSpecies(species.id)" class="btn btn-danger">Supprimer</button>
+      <a [routerLink]="['/species']" class="btn btn-secondary">Retour à la liste</a>
+      <a *ngIf="isAdmin()" [routerLink]="['/species', species.id, 'edit']" class="btn btn-primary">Modifier</a>
+    </div>
+  </div>
+  

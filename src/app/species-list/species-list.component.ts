@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonneService } from '../services/personne.service';
+import { SpeciesService } from '../services/species.service';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-personne-list',
-  templateUrl: './personne-list.component.html',
-  styleUrls: ['./personne-list.component.css']
+  selector: 'app-species-list',
+  templateUrl: './species-list.component.html',
+  styleUrls: ['./species-list.component.css']
 })
-export class PersonneListComponent implements OnInit {
-  personnes: any[] = [];
+export class SpeciesListComponent implements OnInit {
+  speciesList: any[] = [];
   searchForm: FormGroup;
 
   constructor(
-    private personneService: PersonneService,
+    private speciesService: SpeciesService,
     private authService: AuthService,
     private fb: FormBuilder
   ) {
@@ -23,18 +23,18 @@ export class PersonneListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadPersonnes();
+    this.loadSpecies();
 
     // Watch for search input changes
     this.searchForm.get('search')?.valueChanges.subscribe(value => {
-      this.loadPersonnes(value);
+      this.loadSpecies(value);
     });
   }
 
-  loadPersonnes(searchTerm?: string): void {
-    this.personneService.getAll(searchTerm).subscribe(
+  loadSpecies(searchTerm?: string): void {
+    this.speciesService.getAll(searchTerm).subscribe(
       data => {
-        this.personnes = data;
+        this.speciesList = data;
       },
       error => {
         console.error('There was an error!', error);
@@ -42,9 +42,9 @@ export class PersonneListComponent implements OnInit {
     );
   }
 
-  deletePersonne(id: number): void {
-    this.personneService.delete(id).subscribe(() => {
-      this.loadPersonnes(); // Reload the list after deletion
+  deleteSpecies(id: number): void {
+    this.speciesService.delete(id).subscribe(() => {
+      this.loadSpecies(); // Reload the list after deletion
     });
   }
 

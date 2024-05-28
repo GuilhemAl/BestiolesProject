@@ -1,0 +1,60 @@
+<div class="container mt-5">
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <h2>Créer Personne</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form [formGroup]="personneForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="firstName">Prénom</label>
+            <input id="firstName" class="form-control" formControlName="firstName">
+            <div *ngIf="personneForm.get('firstName')?.invalid && personneForm.get('firstName')?.touched" class="text-danger">
+              Le prénom est requis.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Nom</label>
+            <input id="lastName" class="form-control" formControlName="lastName">
+            <div *ngIf="personneForm.get('lastName')?.invalid && personneForm.get('lastName')?.touched" class="text-danger">
+              Le nom est requis.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" class="form-control" formControlName="email">
+            <div *ngIf="personneForm.get('email')?.invalid && personneForm.get('email')?.touched" class="text-danger">
+              Un email valide est requis.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input id="phone" class="form-control" formControlName="phone">
+            <div *ngIf="personneForm.get('phone')?.invalid && personneForm.get('phone')?.touched" class="text-danger">
+              Le téléphone est requis.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address">Adresse</label>
+            <input id="address" class="form-control" formControlName="address">
+            <div *ngIf="personneForm.get('address')?.invalid && personneForm.get('address')?.touched" class="text-danger">
+              L'adresse est requise.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="age">Âge</label>
+            <input id="age" type="number" class="form-control" formControlName="age">
+            <div *ngIf="personneForm.get('age')?.invalid && personneForm.get('age')?.touched" class="text-danger">
+              Un âge valide est requis (entre 0 et 120).
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary" [disabled]="!personneForm.valid">Créer</button>
+            <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

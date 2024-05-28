@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private authUrl = 'http://localhost:8080/auth';
+  private userUrl = 'http://localhost:8080/api/user'; // URL pour obtenir les infos utilisateur
   private tokenKey = 'jwt'; // Clé pour le localStorage
   private userRolesKey = 'userRoles'; // Clé pour les rôles utilisateur
 
@@ -17,7 +18,7 @@ export class AuthService {
     return this.http.post<any>(this.authUrl, { username, password }).pipe(
       tap(response => {
         this.setToken(response.id_token); // Assurez-vous d'utiliser la clé correcte de la réponse du backend
-        this.setUserRolesBasedOnUsername(username); // Définir les rôles utilisateur en fonction du nom d'utilisateur
+        this.fetchUserRoles(); // Récupérer et stocker les rôles utilisateur
       })
     );
   }
@@ -39,11 +40,6 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
   }
 
-  private setUserRolesBasedOnUsername(username: string): void {
-    const roles = username === 'admin' ? ['ROLE_ADMIN'] : ['ROLE_USER'];
-    this.setUserRoles(roles);
-  }
-
   private setUserRoles(roles: string[]): void {
     localStorage.setItem(this.userRolesKey, JSON.stringify(roles));
   }
@@ -55,6 +51,17 @@ export class AuthService {
 
   private removeUserRoles(): void {
     localStorage.removeItem(this.userRolesKey);
+  }
+
+  fetchUserRoles(): void {
+    this.http.get<any>(this.userUrl).pipe(
+      map(response => response.authorities.map((authority: any) => authority.authority)),
+      tap(roles => this.setUserRoles(roles)),
+      catchError(() => {
+        this.removeUserRoles();
+        return of([]);
+      })
+    ).subscribe();
   }
 
   isAuthenticated(): boolean {

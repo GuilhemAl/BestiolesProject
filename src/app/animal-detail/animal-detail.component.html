@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <h2>Détails de l'Animal</h2>
+  <div *ngIf="animal">
+    <p><strong>ID:</strong> {{ animal.id }}</p>
+    <p><strong>Nom:</strong> {{ animal.name }}</p>
+    <p><strong>Couleur:</strong> {{ animal.color }}</p>
+    <p><strong>Sexe:</strong> {{ animal.sex }}</p>
+    <p><strong>Espèce:</strong> {{ animal.species.commonName }}</p>
+    <button
+      *ngIf="isAdmin()"
+      (click)="deleteAnimal(animal.id)"
+      class="btn btn-danger"
+    >
+      Supprimer
+    </button>
+    <a [routerLink]="['/animal']" class="btn btn-secondary"
+      >Retour à la liste</a
+    >
+    <a
+      *ngIf="isAdmin()"
+      [routerLink]="['/animal', animal.id, 'edit']"
+      class="btn btn-primary"
+      >Modifier</a
+    >
+  </div>
+</div>

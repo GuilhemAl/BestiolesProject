@@ -1,0 +1,50 @@
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col-12 text-center">
+      <h2>Modifier Personne</h2>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form [formGroup]="personneForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="firstName">Prénom</label>
+          <input
+            id="firstName"
+            class="form-control"
+            formControlName="firstName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Nom</label>
+          <input
+            id="lastName"
+            class="form-control"
+            formControlName="lastName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="age">Âge</label>
+          <input
+            id="age"
+            type="number"
+            class="form-control"
+            formControlName="age"
+          />
+        </div>
+        <div class="form-group text-center">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!personneForm.valid"
+          >
+            Sauvegarder
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
