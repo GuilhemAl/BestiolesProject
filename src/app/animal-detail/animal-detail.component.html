@@ -6,21 +6,10 @@
     <p><strong>Couleur:</strong> {{ animal.color }}</p>
     <p><strong>Sexe:</strong> {{ animal.sex }}</p>
     <p><strong>Espèce:</strong> {{ animal.species.commonName }}</p>
-    <button
-      *ngIf="isAdmin()"
-      (click)="deleteAnimal(animal.id)"
-      class="btn btn-danger"
-    >
+    <a [routerLink]="['/animal']" class="btn btn-secondary">Retour à la liste</a>
+    <a *ngIf="isAdmin()" [routerLink]="['/animal', animal.id, 'edit']" class="btn btn-primary mx-2">Modifier</a>
+    <button *ngIf="isAdmin()" (click)="deleteAnimal(animal.id)" class="btn btn-danger">
       Supprimer
     </button>
-    <a [routerLink]="['/animal']" class="btn btn-secondary"
-      >Retour à la liste</a
-    >
-    <a
-      *ngIf="isAdmin()"
-      [routerLink]="['/animal', animal.id, 'edit']"
-      class="btn btn-primary"
-      >Modifier</a
-    >
   </div>
 </div>
